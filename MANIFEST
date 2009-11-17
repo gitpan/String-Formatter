@@ -1,0 +1,17 @@
+Changes
+LICENSE
+MANIFEST
+META.json
+META.yml
+Makefile.PL
+README
+bench.pl
+dist.ini
+lib/String/Formatter.pm
+notes.txt
+t/02basic.t
+t/braces.t
+t/params.t
+t/release-pod-coverage.t
+t/release-pod-syntax.t
+t/stringf.t

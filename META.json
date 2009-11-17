@@ -1,0 +1,23 @@
+{
+   "resources" : {
+      "repository" : "http://github.com/rjbs/string-formatter"
+   },
+   "meta-spec" : {
+      "version" : 1.4,
+      "url" : "http://module-build.sourceforge.net/META-spec-v1.4.html"
+   },
+   "generated_by" : "Dist::Zilla version 1.093200",
+   "version" : "0.093200",
+   "name" : "String-Formatter",
+   "author" : [
+      "Ricardo Signes <rjbs@cpan.org>",
+      "Darren Chamberlain <darren@cpan.org>"
+   ],
+   "license" : "gpl",
+   "requires" : {
+      "Params::Util" : "0",
+      "Sub::Exporter" : "0"
+   },
+   "abstract" : "build sprintf-like functions of your own"
+}
+

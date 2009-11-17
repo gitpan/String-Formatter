@@ -16,6 +16,15 @@ use Sub::Exporter -setup => {
       my $formatter = $class->new($arg);
       return sub { $formatter->format(@_) };
     },
+    method_stringf => sub {
+      my ($class, $name, $arg, $col) = @_;
+      my $formatter = $class->new({
+        input_processor => 'require_single_input',
+        string_replacer => 'method_replace',
+        %$arg,
+      });
+      return sub { $formatter->format(@_) };
+    },
     named_stringf => sub {
       my ($class, $name, $arg, $col) = @_;
       my $formatter = $class->new({
@@ -147,6 +156,26 @@ sub require_named_input {
 }
 
 
+sub require_single_input {
+  my ($self, $args) = @_;
+
+  Carp::croak("routine must be called with exactly one argument after string")
+    if @$args != 1;
+
+  return $args->[0];
+}
+
+
+sub forbid_input {
+  my ($self, $args) = @_;
+
+  Carp::croak("routine must be called with no arguments after format string")
+    if @$args;
+
+  return $args;
+}
+
+
 sub __closure_replace {
   my ($closure) = @_;
   
@@ -192,6 +221,30 @@ BEGIN {
 }
 
 
+sub method_replace {
+  my ($self, $hunks, $input) = @_;
+
+  my $heap = {};
+  my $code = $self->codes;
+
+  for my $i (grep { ref $hunks->[$_] } 0 .. $#$hunks) {
+    my $hunk = $hunks->[ $i ];
+    my $conv = $code->{ $hunk->{formchar} };
+
+    Carp::croak("Unknown conversion in stringf: $hunk->{formchar}")
+      unless defined $conv;
+
+    if (ref $conv) {
+      $hunks->[ $i ]->{replacement} = $input->$conv($hunk->{passme});
+    } else {
+      $hunks->[ $i ]->{replacement} = $input->$conv(
+        defined $hunk->{passme} ? $hunk->{passme} : ()
+      );
+    }
+  }
+}
+
+
 sub format_simply {
   my ($self, $hunk) = @_;
 
@@ -220,7 +273,7 @@ String::Formatter - build sprintf-like functions of your own
 
 =head1 VERSION
 
-version 0.093200
+version 0.093210
 
 =head1 WARNING
 
@@ -234,15 +287,15 @@ may change substantially before this warning goes away!
     codes => {
       f => sub { $_ },
       b => sub { scalar reverse $_ },
+      o => 'Okay?',
     },
   };
 
-
-  print str_rf('This is %10f and this is %-15b.', 'forward', 'backward');
+  print str_rf('This is %10f and this is %-15b, %o', 'forward', 'backward');
 
 ...prints...
 
-  This is    forward and this is drawkcab       .
+  This is    forward and this is drawkcab       , okay?
 
 =head1 DESCRIPTION
 
@@ -286,11 +339,13 @@ these routines is based on the C<format> method of a String::Formatter object,
 the rest of the documentation will describe the way the object behaves.
 
 There's also a C<named_stringf> export, which behaves just like the C<stringf>
-export, but defaults to the C<named_replacer> and C<require_named_input>
-arguments.  For more information on these, keep reading.
+export, but defaults to the C<named_replace> and C<require_named_input>
+arguments, and a C<method_stringf> export, which defaults C<method_replace> and
+C<require_single_input>.  For more on these, keep reading, and check out the
+cookbook.
 
-In the future, a L<cookbook|String::Formatter::Cookbook> of recipes will be
-provided.
+L<String::Formatter::Cookbook> provides a number of recipes for ways to put
+String::Formatter to use.
 
 =head1 METHODS
 
@@ -337,6 +392,18 @@ post-format-string argument to the format call, and unless that argument is a
 hashref.  It will also replace the arrayref with the given hashref so
 subsequent phases of the format can avoid lots of needless array dereferencing.
 
+=head2 require_single_input
+
+This input processor will raise an exception if more than one input is given.
+After input processing, the single element in the input will be used as the
+input itself.
+
+=head2 forbid_input
+
+This input processor will raise an exception if any input is given.  In other
+words, formatters with this input processor accept format strings and nothing
+else.
+
 =head2 string_replacer
 
 The string_replacer phase is responsible for adding a C<replacement> entry to
@@ -374,6 +441,12 @@ an example use:
     adj => 'best',
     num => 6,
   });
+
+=head2 method_replace
+
+This string replacer method expects the input to be a single value on which
+methods can be called.  If a value was given in braces to the format code, it
+is passed as an argument.
 
 =head2 hunk_formatter
 

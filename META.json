@@ -7,7 +7,7 @@
       "url" : "http://module-build.sourceforge.net/META-spec-v1.4.html"
    },
    "generated_by" : "Dist::Zilla version 1.093200",
-   "version" : "0.093200",
+   "version" : "0.093210",
    "name" : "String-Formatter",
    "author" : [
       "Ricardo Signes <rjbs@cpan.org>",

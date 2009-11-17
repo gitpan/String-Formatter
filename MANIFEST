@@ -8,9 +8,11 @@ README
 bench.pl
 dist.ini
 lib/String/Formatter.pm
+lib/String/Formatter/Cookbook.pm
 notes.txt
 t/02basic.t
 t/braces.t
+t/method.t
 t/params.t
 t/release-pod-coverage.t
 t/release-pod-syntax.t

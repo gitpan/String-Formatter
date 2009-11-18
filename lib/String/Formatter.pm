@@ -1,9 +1,10 @@
 use strict;
 use warnings;
 package String::Formatter;
-# ABSTRACT: build sprintf-like functions of your own
+our $VERSION = '0.093221';
 
-our $VERSION = '1.16';
+
+# ABSTRACT: build sprintf-like functions of your own
 
 
 require 5.006;
@@ -273,7 +274,7 @@ String::Formatter - build sprintf-like functions of your own
 
 =head1 VERSION
 
-version 0.093220
+version 0.093221
 
 =head1 WARNING
 

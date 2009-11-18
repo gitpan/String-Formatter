@@ -14,4 +14,4 @@ requires:
   Sub::Exporter: 0
 resources:
   repository: http://github.com/rjbs/string-formatter
-version: 0.093220
+version: 0.093221

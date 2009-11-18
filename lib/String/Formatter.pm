@@ -273,7 +273,7 @@ String::Formatter - build sprintf-like functions of your own
 
 =head1 VERSION
 
-version 0.093210
+version 0.093220
 
 =head1 WARNING
 

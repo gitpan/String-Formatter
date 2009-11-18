@@ -3,7 +3,7 @@ abstract: 'build sprintf-like functions of your own'
 author:
   - 'Ricardo Signes <rjbs@cpan.org>'
   - 'Darren Chamberlain <darren@cpan.org>'
-generated_by: 'Dist::Zilla version 1.093200'
+generated_by: 'Dist::Zilla version 1.093220'
 license: gpl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -14,4 +14,4 @@ requires:
   Sub::Exporter: 0
 resources:
   repository: http://github.com/rjbs/string-formatter
-version: 0.093210
+version: 0.093220

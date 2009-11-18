@@ -11,7 +11,7 @@ WriteMakefile(
   NAME      => 'String::Formatter',
   AUTHOR    => "Ricardo\ Signes\ \<rjbs\@cpan\.org\>\,\ Darren\ Chamberlain\ \<darren\@cpan\.org\>",
   ABSTRACT  => "build\ sprintf\-like\ functions\ of\ your\ own",
-  VERSION   => '0.093210',
+  VERSION   => '0.093220',
   EXE_FILES => [ qw() ],
   (eval { ExtUtils::MakeMaker->VERSION(6.31) } ? (LICENSE => 'gpl') : ()),
   PREREQ_PM    => {

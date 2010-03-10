@@ -1,9 +1,7 @@
 use strict;
 use warnings;
 package String::Formatter::Cookbook;
-our $VERSION = '0.093221';
-
-
+our $VERSION = '0.100680';
 # ABSTRACT: ways to put String::Formatter to use
 1;
 
@@ -17,7 +15,7 @@ String::Formatter::Cookbook - ways to put String::Formatter to use
 
 =head1 VERSION
 
-version 0.093221
+version 0.100680
 
 =head1 OVERVIEW
 
@@ -157,9 +155,6 @@ This recipe is available as the export C<method_stringf>:
 You can easily use this to implement an actual stringf-like method:
 
   package MyClass;
-our $VERSION = '0.093221';
-
-
 
   use String::Formatter method_stringf => {
     -as => '_stringf',
@@ -182,7 +177,7 @@ our $VERSION = '0.093221';
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2009 by Ricardo Signes <rjbs@cpan.org>.
+This software is Copyright (c) 2010 by Ricardo Signes <rjbs@cpan.org>.
 
 This is free software, licensed under:
 

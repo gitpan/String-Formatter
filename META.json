@@ -1,23 +1,32 @@
 {
    "resources" : {
-      "repository" : "http://github.com/rjbs/string-formatter"
+      "repository" : "git://git.codesimply.com/String-Formatter.git"
    },
    "meta-spec" : {
       "version" : 1.4,
       "url" : "http://module-build.sourceforge.net/META-spec-v1.4.html"
    },
-   "generated_by" : "Dist::Zilla version 1.093220",
-   "version" : "0.093221",
+   "generated_by" : "Dist::Zilla version 1.100660",
+   "version" : "0.100680",
    "name" : "String-Formatter",
    "author" : [
       "Ricardo Signes <rjbs@cpan.org>",
       "Darren Chamberlain <darren@cpan.org>"
    ],
    "license" : "gpl",
+   "build_requires" : {},
    "requires" : {
+      "Test::More" : "0",
+      "perl" : "5.010",
+      "String::Format" : "0",
       "Params::Util" : "0",
-      "Sub::Exporter" : "0"
+      "Benchmark" : "0",
+      "Sub::Exporter" : "0",
+      "Template" : "0"
    },
-   "abstract" : "build sprintf-like functions of your own"
+   "abstract" : "build sprintf-like functions of your own",
+   "configure_requires" : {
+      "ExtUtils::MakeMaker" : "6.11"
+   }
 }
 

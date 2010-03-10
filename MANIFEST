@@ -10,7 +10,7 @@ dist.ini
 lib/String/Formatter.pm
 lib/String/Formatter/Cookbook.pm
 notes.txt
-t/02basic.t
+t/basic.t
 t/braces.t
 t/method.t
 t/params.t

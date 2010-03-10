@@ -3,15 +3,23 @@ abstract: 'build sprintf-like functions of your own'
 author:
   - 'Ricardo Signes <rjbs@cpan.org>'
   - 'Darren Chamberlain <darren@cpan.org>'
-generated_by: 'Dist::Zilla version 1.093220'
+build_requires: {}
+configure_requires:
+  ExtUtils::MakeMaker: 6.11
+generated_by: 'Dist::Zilla version 1.100660'
 license: gpl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
 name: String-Formatter
 requires:
+  Benchmark: 0
   Params::Util: 0
+  String::Format: 0
   Sub::Exporter: 0
+  Template: 0
+  Test::More: 0
+  perl: 5.010
 resources:
-  repository: http://github.com/rjbs/string-formatter
-version: 0.093221
+  repository: git://git.codesimply.com/String-Formatter.git
+version: 0.100680

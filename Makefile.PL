@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
- BEGIN { require 5.010; } 
+ BEGIN { require 5.006; } 
 
 use ExtUtils::MakeMaker 6.11;
 
@@ -21,7 +21,7 @@ my %WriteMakefileArgs = (
                        'BUILD_REQUIRES' => {},
                        'ABSTRACT' => 'build sprintf-like functions of your own',
                        'EXE_FILES' => [],
-                       'VERSION' => '0.100680',
+                       'VERSION' => '0.100690',
                        'PREREQ_PM' => {
                                         'Test::More' => '0',
                                         'String::Format' => '0',

@@ -6,8 +6,8 @@
       "version" : 1.4,
       "url" : "http://module-build.sourceforge.net/META-spec-v1.4.html"
    },
-   "generated_by" : "Dist::Zilla version 1.100660",
-   "version" : "0.100680",
+   "generated_by" : "Dist::Zilla version 1.100680",
+   "version" : "0.100690",
    "name" : "String-Formatter",
    "author" : [
       "Ricardo Signes <rjbs@cpan.org>",
@@ -17,7 +17,7 @@
    "build_requires" : {},
    "requires" : {
       "Test::More" : "0",
-      "perl" : "5.010",
+      "perl" : "5.006",
       "String::Format" : "0",
       "Params::Util" : "0",
       "Benchmark" : "0",

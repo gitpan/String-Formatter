@@ -6,8 +6,8 @@
       "version" : 1.4,
       "url" : "http://module-build.sourceforge.net/META-spec-v1.4.html"
    },
-   "generated_by" : "Dist::Zilla version 1.100680",
-   "version" : "0.100690",
+   "generated_by" : "Dist::Zilla version 1.100710",
+   "version" : "0.100720",
    "name" : "String-Formatter",
    "author" : [
       "Ricardo Signes <rjbs@cpan.org>",
@@ -16,13 +16,10 @@
    "license" : "gpl",
    "build_requires" : {},
    "requires" : {
-      "Test::More" : "0",
       "perl" : "5.006",
-      "String::Format" : "0",
+      "Test::More" : "0",
       "Params::Util" : "0",
-      "Benchmark" : "0",
-      "Sub::Exporter" : "0",
-      "Template" : "0"
+      "Sub::Exporter" : "0"
    },
    "abstract" : "build sprintf-like functions of your own",
    "configure_requires" : {

@@ -21,14 +21,11 @@ my %WriteMakefileArgs = (
                        'BUILD_REQUIRES' => {},
                        'ABSTRACT' => 'build sprintf-like functions of your own',
                        'EXE_FILES' => [],
-                       'VERSION' => '0.100690',
+                       'VERSION' => '0.100720',
                        'PREREQ_PM' => {
                                         'Test::More' => '0',
-                                        'String::Format' => '0',
                                         'Params::Util' => '0',
-                                        'Benchmark' => '0',
-                                        'Sub::Exporter' => '0',
-                                        'Template' => '0'
+                                        'Sub::Exporter' => '0'
                                       },
                        'LICENSE' => 'gpl'
                      );

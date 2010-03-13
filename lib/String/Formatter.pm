@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 package String::Formatter;
-our $VERSION = '0.100690';
+our $VERSION = '0.100720';
 # ABSTRACT: build sprintf-like functions of your own
 
 
@@ -272,7 +272,7 @@ String::Formatter - build sprintf-like functions of your own
 
 =head1 VERSION
 
-version 0.100690
+version 0.100720
 
 =head1 WARNING
 

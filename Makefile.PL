@@ -4,35 +4,49 @@ use warnings;
 
  BEGIN { require 5.006; } 
 
-use ExtUtils::MakeMaker 6.11;
+use ExtUtils::MakeMaker 6.31;
 
 
 
 my %WriteMakefileArgs = (
-                       'test' => {
-                                   'TESTS' => 't/*.t'
-                                 },
-                       'NAME' => 'String::Formatter',
-                       'DISTNAME' => 'String-Formatter',
-                       'CONFIGURE_REQUIRES' => {
-                                                 'ExtUtils::MakeMaker' => '6.11'
-                                               },
-                       'AUTHOR' => 'Ricardo Signes <rjbs@cpan.org>, Darren Chamberlain <darren@cpan.org>',
-                       'BUILD_REQUIRES' => {},
-                       'ABSTRACT' => 'build sprintf-like functions of your own',
-                       'EXE_FILES' => [],
-                       'VERSION' => '0.100720',
-                       'PREREQ_PM' => {
-                                        'Test::More' => '0',
-                                        'Params::Util' => '0',
-                                        'Sub::Exporter' => '0'
-                                      },
-                       'LICENSE' => 'gpl'
-                     );
+  'ABSTRACT' => 'build sprintf-like functions of your own',
+  'AUTHOR' => 'Ricardo Signes <rjbs@cpan.org>, Darren Chamberlain <darren@cpan.org>',
+  'BUILD_REQUIRES' => {
+    'Test::More' => '0'
+  },
+  'CONFIGURE_REQUIRES' => {
+    'ExtUtils::MakeMaker' => '6.31'
+  },
+  'DISTNAME' => 'String-Formatter',
+  'EXE_FILES' => [],
+  'LICENSE' => 'gpl',
+  'NAME' => 'String::Formatter',
+  'PREREQ_PM' => {
+    'Params::Util' => '0',
+    'Sub::Exporter' => '0'
+  },
+  'VERSION' => '0.101620',
+  'test' => {
+    'TESTS' => 't/*.t'
+  }
+);
 
 
-delete $WriteMakefileArgs{LICENSE}
-  unless eval { ExtUtils::MakeMaker->VERSION(6.31) };
+unless ( eval { ExtUtils::MakeMaker->VERSION(6.56) } ) {
+  my $br = delete $WriteMakefileArgs{BUILD_REQUIRES};
+  my $pp = $WriteMakefileArgs{PREREQ_PM};
+  for my $mod ( keys %$br ) {
+    if ( exists $pp->{$mod} ) {
+      $pp->{$mod} = $br->{$mod} if $br->{$mod} > $pp->{$mod};
+    }
+    else {
+      $pp->{$mod} = $br->{$mod};
+    }
+  }
+}
+
+delete $WriteMakefileArgs{CONFIGURE_REQUIRES}
+  unless eval { ExtUtils::MakeMaker->VERSION(6.52) };
 
 WriteMakefile(%WriteMakefileArgs);
 

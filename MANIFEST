@@ -14,6 +14,5 @@ t/basic.t
 t/braces.t
 t/method.t
 t/params.t
-t/release-pod-coverage.t
 t/release-pod-syntax.t
 t/stringf.t

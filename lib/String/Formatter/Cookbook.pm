@@ -2,7 +2,7 @@ use strict;
 use warnings;
 package String::Formatter::Cookbook;
 BEGIN {
-  $String::Formatter::Cookbook::VERSION = '0.101620';
+  $String::Formatter::Cookbook::VERSION = '0.102080';
 }
 # ABSTRACT: ways to put String::Formatter to use
 1;
@@ -17,7 +17,7 @@ String::Formatter::Cookbook - ways to put String::Formatter to use
 
 =head1 VERSION
 
-version 0.101620
+version 0.102080
 
 =head1 OVERVIEW
 
@@ -174,8 +174,17 @@ You can easily use this to implement an actual stringf-like method:
 
 =head1 AUTHORS
 
-  Ricardo Signes <rjbs@cpan.org>
-  Darren Chamberlain <darren@cpan.org>
+=over 4
+
+=item *
+
+Ricardo Signes <rjbs@cpan.org>
+
+=item *
+
+Darren Chamberlain <darren@cpan.org>
+
+=back
 
 =head1 COPYRIGHT AND LICENSE
 

@@ -2,7 +2,7 @@ use strict;
 use warnings;
 package String::Formatter;
 BEGIN {
-  $String::Formatter::VERSION = '0.101620';
+  $String::Formatter::VERSION = '0.102080';
 }
 # ABSTRACT: build sprintf-like functions of your own
 
@@ -134,12 +134,13 @@ sub hunk_simply {
 
   while ($string =~ m{\G(.*?)$regex}gs) {
     push @to_fmt, $1, {
-      orig      => $2,
       alignment => $3,
       min_width => $4,
       max_width => $5,
-      passme    => $6,
-      formchar  => $7,
+
+      literal     => $2,
+      argument    => $6,
+      conversion  => $7,
     };
 
     $pos = pos $string;
@@ -207,9 +208,9 @@ sub __closure_replace {
 
     for my $i (grep { ref $hunks->[$_] } 0 .. $#$hunks) {
       my $hunk = $hunks->[ $i ];
-      my $conv = $code->{ $hunk->{formchar} };
+      my $conv = $code->{ $hunk->{conversion} };
 
-      Carp::croak("Unknown conversion in stringf: $hunk->{formchar}")
+      Carp::croak("Unknown conversion in stringf: $hunk->{conversion}")
         unless defined $conv;
 
       if (ref $conv) {
@@ -230,19 +231,19 @@ BEGIN {
   *positional_replace = __closure_replace(sub {
     my ($self, $arg) = @_;
     local $_ = $arg->{input}->[ $arg->{heap}{nth}++ ];
-    return $arg->{conv}->($self, $_, $arg->{hunk}{passme});
+    return $arg->{conv}->($self, $_, $arg->{hunk}{argument});
   });
 
   *named_replace = __closure_replace(sub {
     my ($self, $arg) = @_;
-    local $_ = $arg->{input}->{ $arg->{hunk}{passme} };
-    return $arg->{conv}->($self, $_, $arg->{hunk}{passme});
+    local $_ = $arg->{input}->{ $arg->{hunk}{argument} };
+    return $arg->{conv}->($self, $_, $arg->{hunk}{argument});
   });
 
   *indexed_replace = __closure_replace(sub {
     my ($self, $arg) = @_;
-    local $_ = $arg->{input}->[ $arg->{hunk}{passme} ];
-    return $arg->{conv}->($self, $_, $arg->{hunk}{passme});
+    local $_ = $arg->{input}->[ $arg->{hunk}{argument} ];
+    return $arg->{conv}->($self, $_, $arg->{hunk}{argument});
   });
 }
 
@@ -255,16 +256,16 @@ sub method_replace {
 
   for my $i (grep { ref $hunks->[$_] } 0 .. $#$hunks) {
     my $hunk = $hunks->[ $i ];
-    my $conv = $code->{ $hunk->{formchar} };
+    my $conv = $code->{ $hunk->{conversion} };
 
-    Carp::croak("Unknown conversion in stringf: $hunk->{formchar}")
+    Carp::croak("Unknown conversion in stringf: $hunk->{conversion}")
       unless defined $conv;
 
     if (ref $conv) {
-      $hunks->[ $i ]->{replacement} = $input->$conv($hunk->{passme});
+      $hunks->[ $i ]->{replacement} = $input->$conv($hunk->{argument});
     } else {
       $hunks->[ $i ]->{replacement} = $input->$conv(
-        defined $hunk->{passme} ? $hunk->{passme} : ()
+        defined $hunk->{argument} ? $hunk->{argument} : ()
       );
     }
   }
@@ -299,7 +300,7 @@ String::Formatter - build sprintf-like functions of your own
 
 =head1 VERSION
 
-version 0.101620
+version 0.102080
 
 =head1 WARNING
 
@@ -392,13 +393,35 @@ C<L</new>> and returning the result.
 Format hunkers are passed strings and return arrayrefs containing strings (for
 fixed content) and hashrefs (for formatting code sections).
 
-The semantics of the hashrefs returned are not yet stable enough to be worth
-documenting.
+The hashref hunks should contain at least two entries:  C<conversion> for the
+conversion code (the s, d, or u in %s, %d, or %u); and C<literal> for the
+complete original text of the hunk.  For example, a bare minimum hunker should
+turn the following:
+
+  I would like to buy %d %s today.
+
+...into...
+
+  [
+    'I would like to buy ',
+    { conversion => 'd', literal => '%d' },
+    ' ',
+    { conversion => 's', literal => '%d' },
+    ' today.',
+  ]
+
+Another common entry is C<argument>.  In the format strings expected by
+C<hunk_simply>, for example, these are free strings inside of curly braces.
+These are used extensively other existing helpers for things liked accessing
+named arguments or providing method names.
 
 =head2 hunk_simply
 
 This is the default format hunker.  It implements the format string semantics
 L<described above|/FORMAT STRINGS>.
+
+This hunker will produce C<argument> and C<conversion> and C<literal>.  Its
+other entries are not yet well-defined for public consumption.
 
 =head2 input_processor
 
@@ -596,8 +619,17 @@ String::Formatter.  Very little of the original code remains.
 
 =head1 AUTHORS
 
-  Ricardo Signes <rjbs@cpan.org>
-  Darren Chamberlain <darren@cpan.org>
+=over 4
+
+=item *
+
+Ricardo Signes <rjbs@cpan.org>
+
+=item *
+
+Darren Chamberlain <darren@cpan.org>
+
+=back
 
 =head1 COPYRIGHT AND LICENSE
 

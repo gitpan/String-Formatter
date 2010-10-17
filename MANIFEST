@@ -9,7 +9,6 @@ bench.pl
 dist.ini
 lib/String/Formatter.pm
 lib/String/Formatter/Cookbook.pm
-notes.txt
 t/basic.t
 t/braces.t
 t/method.t

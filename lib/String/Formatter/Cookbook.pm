@@ -2,7 +2,7 @@ use strict;
 use warnings;
 package String::Formatter::Cookbook;
 BEGIN {
-  $String::Formatter::Cookbook::VERSION = '0.102080';
+  $String::Formatter::Cookbook::VERSION = '0.102081';
 }
 # ABSTRACT: ways to put String::Formatter to use
 1;
@@ -17,7 +17,7 @@ String::Formatter::Cookbook - ways to put String::Formatter to use
 
 =head1 VERSION
 
-version 0.102080
+version 0.102081
 
 =head1 OVERVIEW
 

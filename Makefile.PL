@@ -25,7 +25,7 @@ my %WriteMakefileArgs = (
     'Params::Util' => '0',
     'Sub::Exporter' => '0'
   },
-  'VERSION' => '0.102080',
+  'VERSION' => '0.102081',
   'test' => {
     'TESTS' => 't/*.t'
   }

@@ -2,7 +2,7 @@ use strict;
 use warnings;
 package String::Formatter;
 BEGIN {
-  $String::Formatter::VERSION = '0.102080';
+  $String::Formatter::VERSION = '0.102081';
 }
 # ABSTRACT: build sprintf-like functions of your own
 
@@ -55,7 +55,7 @@ BEGIN {
     string_replacer => 'positional_replace',
     hunk_formatter  => 'format_simply',
   );
-  
+
   no strict 'refs';
   for my $method (keys %METHODS) {
     *$method = sub { $_[0]->{ $method } };
@@ -66,10 +66,19 @@ BEGIN {
 }
 
 
+sub default_codes {
+  return {};
+}
+
 sub new {
   my ($class, $arg) = @_;
 
-  my $self = bless { codes => $arg->{codes} } => $class;
+  my $_codes = {
+    %{ $class->default_codes },
+    %{ $arg->{codes} || {} },
+  };
+
+  my $self = bless { codes => $_codes } => $class;
 
   for (keys %METHODS) {
     $self->{ $_ } = $arg->{ $_ } || do {
@@ -81,9 +90,6 @@ sub new {
   }
 
   my $codes = $self->codes;
-
-  Carp::confess("you must not supply a % format") if defined $codes->{'%'};
-  $codes->{'%'} = '%';
 
   return $self;
 }
@@ -143,6 +149,8 @@ sub hunk_simply {
       conversion  => $7,
     };
 
+    $to_fmt[-1] = '%' if $to_fmt[-1]{literal} eq '%%';
+
     $pos = pos $string;
   }
 
@@ -199,7 +207,7 @@ sub forbid_input {
 
 sub __closure_replace {
   my ($closure) = @_;
-  
+
   return sub {
     my ($self, $hunks, $input) = @_;
 
@@ -227,6 +235,7 @@ sub __closure_replace {
   };
 }
 
+# $self->$string_replacer($hunks, $input);
 BEGIN {
   *positional_replace = __closure_replace(sub {
     my ($self, $arg) = @_;
@@ -300,7 +309,7 @@ String::Formatter - build sprintf-like functions of your own
 
 =head1 VERSION
 
-version 0.102080
+version 0.102081
 
 =head1 WARNING
 
@@ -552,6 +561,19 @@ Currently the only format modifers must match:
 Some additional format semantics may be added, but probably nothing exotic.
 Even things like C<2$> and C<*> are probably not going to appear in
 String::Formatter's default behavior.
+
+Another subtle difference, introduced intentionally, is in the handling of
+C<%%>.  With the default String::Formatter behavior, string C<%%> is not
+interpreted as a formatting code.  This is different from the behavior of
+Perl's C<sprintf>, which interprets it as a special formatting character that
+doesn't consume input and always acts like the fixed string C<%>.  The upshot
+of this is:
+
+  sprintf "%%";   # ==> returns "%"
+  stringf "%%";   # ==> returns "%%"
+
+  sprintf "%10%"; # ==> returns "         %"
+  stringf "%10%"; # ==> dies: unknown format code %
 
 =for Pod::Coverage codes 
   default_format_hunker

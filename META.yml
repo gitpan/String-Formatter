@@ -4,7 +4,7 @@ author:
   - 'Ricardo Signes <rjbs@cpan.org>'
   - 'Darren Chamberlain <darren@cpan.org>'
 build_requires:
-  Test::More: 0
+  Test::More: 0.88
 configure_requires:
   ExtUtils::MakeMaker: 6.31
 dynamic_config: 0
@@ -20,7 +20,7 @@ requires:
   perl: 5.006
 resources:
   repository: git://git.codesimply.com/String-Formatter.git
-version: 0.102081
+version: 0.102082
 x_Dist_Zilla:
   plugins:
     -

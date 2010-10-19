@@ -12,7 +12,7 @@ my %WriteMakefileArgs = (
   'ABSTRACT' => 'build sprintf-like functions of your own',
   'AUTHOR' => 'Ricardo Signes <rjbs@cpan.org>, Darren Chamberlain <darren@cpan.org>',
   'BUILD_REQUIRES' => {
-    'Test::More' => '0'
+    'Test::More' => '0.88'
   },
   'CONFIGURE_REQUIRES' => {
     'ExtUtils::MakeMaker' => '6.31'
@@ -25,7 +25,7 @@ my %WriteMakefileArgs = (
     'Params::Util' => '0',
     'Sub::Exporter' => '0'
   },
-  'VERSION' => '0.102081',
+  'VERSION' => '0.102082',
   'test' => {
     'TESTS' => 't/*.t'
   }

@@ -29,7 +29,7 @@
       },
       "test" : {
          "requires" : {
-            "Test::More" : 0
+            "Test::More" : "0.88"
          }
       }
    },
@@ -40,7 +40,7 @@
          "url" : "git://git.codesimply.com/String-Formatter.git"
       }
    },
-   "version" : "0.102081",
+   "version" : "0.102082",
    "x_Dist_Zilla" : {
       "plugins" : [
          {

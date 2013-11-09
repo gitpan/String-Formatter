@@ -1,8 +1,8 @@
 use strict;
 use warnings;
 package String::Formatter;
-BEGIN {
-  $String::Formatter::VERSION = '0.102082';
+{
+  $String::Formatter::VERSION = '0.102083';
 }
 # ABSTRACT: build sprintf-like functions of your own
 
@@ -257,6 +257,7 @@ BEGIN {
 }
 
 
+# should totally be rewritten with commonality with keyed_replace factored out
 sub method_replace {
   my ($self, $hunks, $input) = @_;
 
@@ -271,11 +272,38 @@ sub method_replace {
       unless defined $conv;
 
     if (ref $conv) {
+      local $_ = $input;
       $hunks->[ $i ]->{replacement} = $input->$conv($hunk->{argument});
     } else {
+      local $_ = $input;
       $hunks->[ $i ]->{replacement} = $input->$conv(
         defined $hunk->{argument} ? $hunk->{argument} : ()
       );
+    }
+  }
+}
+
+
+# should totally be rewritten with commonality with method_replace factored out
+sub keyed_replace {
+  my ($self, $hunks, $input) = @_;
+
+  my $heap = {};
+  my $code = $self->codes;
+
+  for my $i (grep { ref $hunks->[$_] } 0 .. $#$hunks) {
+    my $hunk = $hunks->[ $i ];
+    my $conv = $code->{ $hunk->{conversion} };
+
+    Carp::croak("Unknown conversion in stringf: $hunk->{conversion}")
+      unless defined $conv;
+
+    if (ref $conv) {
+      local $_ = $input;
+      $hunks->[ $i ]->{replacement} = $input->$conv($hunk->{argument});
+    } else {
+      local $_ = $input;
+      $hunks->[ $i ]->{replacement} = $input->{$conv};
     }
   }
 }
@@ -299,8 +327,8 @@ sub format_simply {
 
 1;
 
-
 __END__
+
 =pod
 
 =head1 NAME
@@ -309,12 +337,7 @@ String::Formatter - build sprintf-like functions of your own
 
 =head1 VERSION
 
-version 0.102082
-
-=head1 WARNING
-
-This module is brand new (as of today, 2009-11-16) and parts of its interface
-may change substantially before this warning goes away!
+version 0.102083
 
 =head1 SYNOPSIS
 
@@ -523,6 +546,15 @@ This string replacer method expects the input to be a single value on which
 methods can be called.  If a value was given in braces to the format code, it
 is passed as an argument.
 
+=head2 keyed_replace
+
+This string replacer method expects the input to be a single hashref.  Coderef
+code values are used as callbacks, but strings are used as hash keys.  If a
+value was given in braces to the format code, it is ignored.
+
+For example if the codes contain C<< i => 'ident' >> then C<%i> in the format
+string will be replaced with C<< $input->{ident} >> in the output.
+
 =head2 hunk_formatter
 
 The hunk_formatter processes each the hashref hunks left after string
@@ -552,7 +584,7 @@ of Perl's astonishingly large and complex system.  That subset looks like this:
   s    - a short string (usually one character) identifying the conversion
 
 Not all format modifiers found in Perl's C<sprintf> are yet supported.
-Currently the only format modifers must match:
+Currently the only format modifiers must match:
 
     (-)?          # left-align, rather than right
     (\d*)?        # (optional) minimum field width
@@ -630,7 +662,8 @@ all hunks, now strings, are recombined; this phase is just C<join>
 
 The defaults are found by calling C<default_WHATEVER> for each helper that
 isn't given.  Values must be either strings (which are interpreted as method
-names) or coderefs.  The semantics for each method are descibed in the methods' sections, below.
+names) or coderefs.  The semantics for each method are described in the
+methods' sections, below.
 
 =head1 HISTORY
 
@@ -655,11 +688,10 @@ Darren Chamberlain <darren@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2010 by Ricardo Signes <rjbs@cpan.org>.
+This software is Copyright (c) 2013 by Ricardo Signes <rjbs@cpan.org>.
 
 This is free software, licensed under:
 
   The GNU General Public License, Version 2, June 1991
 
 =cut
-

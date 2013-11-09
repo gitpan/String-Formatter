@@ -1,14 +1,14 @@
 use strict;
 use warnings;
 package String::Formatter::Cookbook;
-BEGIN {
-  $String::Formatter::Cookbook::VERSION = '0.102082';
+{
+  $String::Formatter::Cookbook::VERSION = '0.102083';
 }
 # ABSTRACT: ways to put String::Formatter to use
 1;
 
-
 __END__
+
 =pod
 
 =head1 NAME
@@ -17,7 +17,7 @@ String::Formatter::Cookbook - ways to put String::Formatter to use
 
 =head1 VERSION
 
-version 0.102082
+version 0.102083
 
 =head1 OVERVIEW
 
@@ -56,7 +56,7 @@ format string, an exception will be raised.
 
 Another common pattern is to create a routine that behaves like Perl's
 C<sprintf>, but with a different set of conversion routines.  (It will also
-almost ceratinly have much simpler semantics than Perl's wildly complex
+almost certainly have much simpler semantics than Perl's wildly complex
 behavior.)
 
   use String::Formatter stringf => {
@@ -71,7 +71,7 @@ behavior.)
     "My name is %s.  I am about %l feet tall.  I use an %e alphabet.\n",
     'Ricardo',
     'ffffff',
-    'abcchdefghijklmnñopqrrrstuvwxyz',
+    'abcchdefghijklllmnñopqrrrstuvwxyz',
   );
 
   # Output:
@@ -188,11 +188,10 @@ Darren Chamberlain <darren@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2010 by Ricardo Signes <rjbs@cpan.org>.
+This software is Copyright (c) 2013 by Ricardo Signes <rjbs@cpan.org>.
 
 This is free software, licensed under:
 
   The GNU General Public License, Version 2, June 1991
 
 =cut
-

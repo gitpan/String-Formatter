@@ -1,11 +1,11 @@
 
 
 This archive contains the distribution String-Formatter,
-version 0.102082:
+version 0.102083:
 
   build sprintf-like functions of your own
 
-This software is Copyright (c) 2010 by Ricardo Signes <rjbs@cpan.org>.
+This software is Copyright (c) 2013 by Ricardo Signes <rjbs@cpan.org>.
 
 This is free software, licensed under:
 

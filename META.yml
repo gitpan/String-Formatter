@@ -21,10 +21,10 @@ requires:
   strict: 0
   warnings: 0
 resources:
-  bugtracker: https://github.com/rjbs/string-formatter/issues
-  homepage: https://github.com/rjbs/string-formatter
-  repository: https://github.com/rjbs/string-formatter.git
-version: 0.102083
+  bugtracker: https://github.com/rjbs/String-Formatter/issues
+  homepage: https://github.com/rjbs/String-Formatter
+  repository: https://github.com/rjbs/String-Formatter.git
+version: 0.102084
 x_Dist_Zilla:
   perl:
     version: 5.019005

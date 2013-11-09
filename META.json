@@ -44,16 +44,16 @@
    "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/rjbs/string-formatter/issues"
+         "web" : "https://github.com/rjbs/String-Formatter/issues"
       },
-      "homepage" : "https://github.com/rjbs/string-formatter",
+      "homepage" : "https://github.com/rjbs/String-Formatter",
       "repository" : {
          "type" : "git",
-         "url" : "https://github.com/rjbs/string-formatter.git",
-         "web" : "https://github.com/rjbs/string-formatter"
+         "url" : "https://github.com/rjbs/String-Formatter.git",
+         "web" : "https://github.com/rjbs/String-Formatter"
       }
    },
-   "version" : "0.102083",
+   "version" : "0.102084",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.019005"
